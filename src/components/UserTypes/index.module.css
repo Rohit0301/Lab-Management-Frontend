@@ -1,0 +1,14 @@
+.user_types_container{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-direction: row !important;
+     padding: 8px 0;
+   }
+   
+.user_type{
+       border: 1px solid black !important;
+       border-radius: 4px !important;
+       flex: 1;
+       margin: 0 !important;
+   }
