@@ -1,12 +1,11 @@
-import { router } from "./Routes";
-import Login from "./pages/Login";
+import { PageRoutes } from "./routes/Routes";
 import Theme from "./theme";
-import { RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Routes } from "react-router-dom";
 
 function App() {
 	return (
 		<Theme>
-			<RouterProvider router={router} />
+			<PageRoutes />
 		</Theme>
 	);
 }

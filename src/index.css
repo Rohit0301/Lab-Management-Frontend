@@ -67,3 +67,24 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 } */
+
+
+.bold{
+  font-weight: bold !important;
+}
+
+.no-borders{
+  border: none !important;
+}
+
+.btn_container{
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 1em;
+}
+
+body {
+  margin: 0;
+}

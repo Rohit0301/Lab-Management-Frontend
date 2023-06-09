@@ -15,10 +15,11 @@ import { UserTypes } from "../../../components";
 
 export default function PateintRegistration() {
 	return (
-		<Container component="main" maxWidth="xs">
+		<Container component="main" maxWidth="sm">
 			<Box
 				sx={{
-					marginTop: 8,
+					mt: 2,
+					mb: 2,
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "center",

@@ -1,2 +1,3 @@
 import UserTypes from "./UserTypes";
-export { UserTypes }
+import CustomTable from "./Table";
+export { UserTypes, CustomTable }
