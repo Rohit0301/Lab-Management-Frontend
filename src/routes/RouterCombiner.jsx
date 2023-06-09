@@ -1,13 +1,9 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import PageNotFound from "../pages/PageNotFound";
+import { HOME, LOGIN } from "../constants/routes";
 
-const RouterCombiner = ({
-	PrivateRoute,
-	routes,
-	role,
-	auth /* Its Only Use For Now,I Handle It With ReduxStore */,
-}) => {
+const RouterCombiner = ({ routes, role }) => {
 	const RoutesMap = routes.map(
 		({
 			accessRoles,
@@ -31,7 +27,7 @@ const RouterCombiner = ({
 							path={path}
 							element={
 								!role ? (
-									<Navigate to="/login" />
+									<Navigate to={LOGIN} />
 								) : accessRoles.includes(role) ? (
 									<ComponentWithLayout />
 								) : (
@@ -44,14 +40,12 @@ const RouterCombiner = ({
 						<Route
 							key={path}
 							exact={exact}
-							element={<ComponentWithLayout />}
+							element={role ? <Navigate to={HOME} /> : <ComponentWithLayout />}
 							path={path}
 						/>,
 				  ];
 		}
 	);
-
-	console.log(RoutesMap);
 	return <Routes> {RoutesMap}</Routes>;
 };
 

@@ -1,70 +1,91 @@
+import React from "react";
 import { UnAuthLayout, AuthLayout } from "../layout";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import RegisterPatient from "../pages/RegisterPatient";
-import TestAssignment from "../pages/TestAssignment";
-import TestListing from "../pages/TestListing";
-
 import { BrowserRouter as Router } from "react-router-dom";
-import RouterCombiner from "./RouterCombiner";
-import PageNotFound from "../pages/PageNotFound";
-import PatientListing from "../pages/PatientListing";
+import { useSelector } from "react-redux";
+import Home from "../pages/Home";
+import {
+	ASSIGN_TEST,
+	HOME,
+	LIST_PATIENTS,
+	LIST_REPORTS,
+	LIST_TEST,
+	LOGIN,
+	NEW_PATIENT,
+	REGISTER,
+} from "../constants/routes";
+import { ALL_ROLES, LABORATORY_ROLE } from "../constants";
+const Login = React.lazy(() => import("../pages/Login"));
+const Register = React.lazy(() => import("../pages/Register"));
+const RegisterPatient = React.lazy(() => import("../pages/RegisterPatient"));
+const TestAssignment = React.lazy(() => import("../pages/TestAssignment"));
+const TestListing = React.lazy(() => import("../pages/TestListing"));
+const RouterCombiner = React.lazy(() => import("./RouterCombiner"));
+const PageNotFound = React.lazy(() => import("../pages/PageNotFound"));
+const PatientListing = React.lazy(() => import("../pages/PatientListing"));
 
 export const routes = [
 	{
 		title: "Login",
-		path: "/login",
+		path: LOGIN,
 		description: "Live Health | Login",
 		Component: Login,
 		Layout: UnAuthLayout,
 	},
 	{
 		title: "Register",
-		path: "/register",
+		path: REGISTER,
 		description: "Live Health | Register",
 		Component: Register,
 		Layout: UnAuthLayout,
 	},
 	{
+		title: "Home",
+		path: HOME,
+		description: "Live Health | Home",
+		Component: Home,
+		accessRoles: ALL_ROLES,
+		Layout: AuthLayout,
+	},
+	{
 		title: "Add New Patient",
-		path: "/new-patient",
+		path: NEW_PATIENT,
 		description: "Add New Patient",
 		Component: RegisterPatient,
-		accessRoles: ["laboratory"],
+		accessRoles: LABORATORY_ROLE,
 		Layout: AuthLayout,
 	},
 	{
 		title: "Assign Test",
-		path: "/assign-test",
+		path: ASSIGN_TEST,
 		description: "Assign test to patients",
 		Component: TestAssignment,
-		accessRoles: ["laboratory"],
+		accessRoles: LABORATORY_ROLE,
 		Layout: AuthLayout,
 	},
 	{
 		title: "List Test",
-		path: "/tests",
+		path: LIST_TEST,
 		description: "List all the test available in the lab",
 		Component: TestListing,
-		accessRoles: ["laboratory"],
+		accessRoles: LABORATORY_ROLE,
 		Layout: AuthLayout,
 	},
 	{
 		title: "List Patient",
-		path: "/patients",
+		path: LIST_PATIENTS,
 		description: "List all the patients registered in a lab",
 		Component: PatientListing,
 		private: true,
-		accessRoles: ["laboratory"],
+		accessRoles: LABORATORY_ROLE,
 		Layout: AuthLayout,
 	},
 	{
 		title: "List Reports",
-		path: "/reports",
+		path: LIST_REPORTS,
 		description: "List patient reports",
 		Component: TestListing,
 		private: true,
-		accessRoles: ["laboratory", "user"],
+		accessRoles: ALL_ROLES,
 		Layout: AuthLayout,
 	},
 	{
@@ -76,11 +97,10 @@ export const routes = [
 ];
 
 export const PageRoutes = () => {
-	const role = "laboratory";
-	const auth = true;
+	const user = useSelector((state) => state.user);
 	return (
 		<Router>
-			<RouterCombiner routes={routes} auth={auth} role={role} />
+			<RouterCombiner routes={routes} role={user?.role} />
 		</Router>
 	);
 };

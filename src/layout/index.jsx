@@ -12,7 +12,7 @@ export function AuthLayout({ children }) {
 			<Grid item xs={12} sx={{ height: "max-content" }}>
 				<Navbar />
 			</Grid>
-			<Grid container xs={12} sx={{ height: "94%" }}>
+			<Grid container item xs={12} sx={{ height: "94%" }}>
 				<Grid item md={3} lg={2} xs={0} height="100vh">
 					<Sidebar />
 				</Grid>
@@ -33,11 +33,14 @@ export function AuthLayout({ children }) {
 
 export function UnAuthLayout({ children }) {
 	return (
-		<Grid container style={{ width: "100%", height: "100vh" }}>
+		<Grid
+			container
+			style={{ width: "100%", height: "100vh", overflow: "hidden" }}
+		>
 			<Grid item xs={12} sx={{ height: "max-content" }}>
 				<Navbar />
 			</Grid>
-			<Grid item xs={12} sx={{ height: "100%" }}>
+			<Grid container item xs={12} sx={{ height: "90%", overflowY: "scroll" }}>
 				{children}
 			</Grid>
 		</Grid>

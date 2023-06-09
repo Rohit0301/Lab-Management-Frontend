@@ -16,7 +16,7 @@ export default function ListingLabPateints() {
 				}}
 			>
 				<Typography component="h1" variant="h5">
-					All Registered Pateints
+					All Registered Patients
 				</Typography>
 			</Box>
 			<CustomTable />

@@ -1,13 +1,14 @@
 import { Button, TextField, Box, Typography, Container } from "@mui/material";
-import styles from "../index.module.css";
 import { UserTypes } from "../../../components";
+import { LOGIN } from "../../../constants/routes";
+import { Link } from "react-router-dom";
 
 export default function RegistrationPresenter() {
 	return (
 		<Container component="main" maxWidth="xs">
 			<Box
 				sx={{
-					marginTop: 8,
+					marginTop: 3,
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "center",
@@ -83,6 +84,10 @@ export default function RegistrationPresenter() {
 					>
 						Register
 					</Button>
+					<Typography sx={{ float: "right" }}>
+						Already have an account?
+						<Link to={LOGIN}> Sign In</Link>
+					</Typography>
 				</Box>
 			</Box>
 		</Container>

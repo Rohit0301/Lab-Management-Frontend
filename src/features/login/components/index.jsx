@@ -4,14 +4,14 @@ import {
 	Box,
 	Typography,
 	Container,
-	RadioGroup,
-	FormControlLabel,
-	Radio,
+	useTheme,
 } from "@mui/material";
-import styles from "../index.module.css";
 import { UserTypes } from "../../../components";
+import { Link } from "react-router-dom";
+import { REGISTER } from "../../../constants/routes";
 
 export default function LoginPresenter() {
+	const theme = useTheme();
 	return (
 		<Container component="main" maxWidth="xs">
 			<Box
@@ -53,6 +53,10 @@ export default function LoginPresenter() {
 					>
 						Sign In
 					</Button>
+					<Typography sx={{ float: "right" }}>
+						Don't have an account?
+						<Link to={REGISTER}> Register</Link>
+					</Typography>
 				</Box>
 			</Box>
 		</Container>

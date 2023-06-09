@@ -1,11 +1,14 @@
 import { PageRoutes } from "./routes/Routes";
+import store from "./store";
 import Theme from "./theme";
-import { BrowserRouter as Router, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
 
 function App() {
 	return (
 		<Theme>
-			<PageRoutes />
+			<Provider store={store}>
+				<PageRoutes />
+			</Provider>
 		</Theme>
 	);
 }
