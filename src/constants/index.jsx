@@ -107,7 +107,7 @@ export const TEST_COLUMN = [
 	{
 		id: 1,
 		label: "Test Name",
-		key: "test_name",
+		key: "name",
 	},
 	{
 		id: 2,
@@ -122,7 +122,7 @@ export const TEST_COLUMN = [
 	{
 		id: 4,
 		label: "Type",
-		key: "type",
+		key: "test_type",
 	},
 	{
 		id: 5,

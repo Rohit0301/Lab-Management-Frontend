@@ -6,9 +6,10 @@ export const patientSlice = createSlice({
 	initialState: {
 		data: [],
 		loading: false,
-		addPatientLoading: false,
 		errors: {},
 		status: "",
+		addPatientLoading: false,
+		deleteStatus: "",
 	},
 	reducers: {
 		setPatientRegistrationError: (state, action) => {
@@ -40,7 +41,11 @@ export const patientSlice = createSlice({
 				}
 				state.addPatientLoading = false;
 			})
-			.addCase(deletePatient.fulfilled, (state, action) => {});
+			.addCase(deletePatient.fulfilled, (state, action) => {
+				const newData = state.data.filter((item) => item.id != action.payload);
+				state.data = newData;
+				state.deleteStatus = "success";
+			});
 	},
 });
 

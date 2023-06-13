@@ -43,6 +43,6 @@ export const deletePatient = createAsyncThunk(
 			method: "DELETE",
 			endpoint: MUTATE_LAB_PATIENT_API + `${patient_id}/`,
 		});
-		if (response.status === 204) return response.data;
+		if (response.status === 204) return patient_id;
 	}
 );

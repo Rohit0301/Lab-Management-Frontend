@@ -10,101 +10,13 @@ import { CircularProgress } from "@mui/material";
 import CustomSnackbar from "../Snackbar";
 import { useGlobalContext } from "../../hooks";
 
-// const columns = [
-// 	{
-// 		id: 1,
-// 		label: "Sr No.",
-// 		key: "id",
-// 	},
-// 	{
-// 		id: 2,
-// 		label: "Test Name",
-// 		key: "test_name",
-// 	},
-// 	{
-// 		id: 3,
-// 		label: "Sample Needed",
-// 		key: "sample_needed",
-// 	},
-// 	{
-// 		id: 4,
-// 		label: "Price",
-// 		key: "price",
-// 	},
-// 	{
-// 		id: 5,
-// 		label: "Type",
-// 		key: "type",
-// 	},
-// 	{
-// 		id: 6,
-// 		label: "Description",
-// 		key: "description",
-// 	},
-// 	{
-// 		id: 7,
-// 		label: "Action",
-// 	},
-// ];
-
-// const data = [
-// 	{
-// 		id: 1,
-// 		test_name: "Test 1",
-// 		sample_needed: "Sample 1",
-// 		price: 300,
-// 		type: "Type 1",
-// 		description: "Test Description",
-// 	},
-// 	{
-// 		id: 2,
-// 		test_name: "Test 1",
-// 		sample_needed: "Sample 1",
-// 		price: 300,
-// 		type: "Type 1",
-// 		description: "Test Description",
-// 	},
-// 	{
-// 		id: 3,
-// 		test_name: "Test 1",
-// 		sample_needed: "Sample 1",
-// 		price: 300,
-// 		type: "Type 1",
-// 		description: "Test Description",
-// 	},
-// 	{
-// 		id: 4,
-// 		test_name: "Test 1",
-// 		sample_needed: "Sample 1",
-// 		price: 300,
-// 		type: "Type 1",
-// 		description: "Test Description",
-// 	},
-// 	{
-// 		id: 5,
-// 		test_name: "Test 1",
-// 		sample_needed: "Sample 1",
-// 		price: 300,
-// 		type: "Type 1",
-// 		description: "Test Description",
-// 	},
-// 	{
-// 		id: 6,
-// 		test_name: "Test 1",
-// 		sample_needed: "Sample 1",
-// 		price: 300,
-// 		type: "Type 1",
-// 		description: "Test Description",
-// 	},
-// ];
-
 export default function CustomTable({ data, loading, columns }) {
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 650 }} aria-label="simple table">
 				<TableHead>
 					<TableRow>
-						<TableCell align="right" key="sr-head">
+						<TableCell align="center" key="sr-head">
 							Sr No.
 						</TableCell>
 						{columns.map((col) => (

@@ -1,10 +1,18 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import AddTestModal from "./addTestModal";
 import { CustomTable } from "../../../components";
 import { TEST_COLUMN } from "../../../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTests } from "../../../store/testSlice/action";
 
 export default function ListingLabTest() {
+	const lab_id = 4;
+	const dispatch = useDispatch();
+	const { data, loading } = useSelector((state) => state.test);
+	useEffect(() => {
+		if (!data || data.length === 0) dispatch(fetchTests(lab_id));
+	}, []);
 	return (
 		<Container component="main" maxWidth="lg">
 			<Box
@@ -22,7 +30,7 @@ export default function ListingLabTest() {
 				</Typography>
 				<AddTestModal />
 			</Box>
-			<CustomTable columns={TEST_COLUMN} data={[]} />
+			<CustomTable columns={TEST_COLUMN} data={data} loading={loading} />
 		</Container>
 	);
 }
