@@ -1,0 +1,8 @@
+.auth_btn{
+    color: white;
+    border-color: white;
+}
+
+.auth_btn:hover{
+    border-color: white;
+}

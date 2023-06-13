@@ -1,3 +1,5 @@
+import { CustomSnackbar } from "./components";
+import GlobalContext from "./context";
 import { PageRoutes } from "./routes/Routes";
 import store from "./store";
 import Theme from "./theme";
@@ -6,9 +8,12 @@ import { Provider } from "react-redux";
 function App() {
 	return (
 		<Theme>
-			<Provider store={store}>
-				<PageRoutes />
-			</Provider>
+			<GlobalContext>
+				<Provider store={store}>
+					<PageRoutes />
+				</Provider>
+				<CustomSnackbar />
+			</GlobalContext>
 		</Theme>
 	);
 }

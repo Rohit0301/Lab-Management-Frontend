@@ -1,3 +1,4 @@
 import UserTypes from "./UserTypes";
 import CustomTable from "./Table";
-export { UserTypes, CustomTable }
+import CustomSnackbar from "./Snackbar";
+export { UserTypes, CustomTable, CustomPopover, CustomSnackbar };
