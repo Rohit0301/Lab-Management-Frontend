@@ -1,6 +1,8 @@
-import React from "react";
 import { Box, Container, Typography } from "@mui/material";
-export default function Home() {
+import React from "react";
+import ReportTable from "./ReportTable";
+
+export default function ListingPatientReport() {
 	return (
 		<Container component="main" maxWidth="lg">
 			<Box
@@ -14,9 +16,10 @@ export default function Home() {
 				}}
 			>
 				<Typography component="h1" variant="h5">
-					Home
+					List All Reports
 				</Typography>
 			</Box>
+			<ReportTable />
 		</Container>
 	);
 }

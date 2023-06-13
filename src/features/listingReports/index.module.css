@@ -1,0 +1,35 @@
+.report_row{
+    background: #f1f1f1;
+    padding: 20px 20px;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 2fr 1fr;
+}
+
+.report_head{
+    background: #bfbcbc;
+    padding: 12px 20px;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 2fr 1fr;
+}
+
+
+.report_table{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.bill_table{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 15px;
+}
+
+.bill_row{
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr;
+    padding: 12px 16px;
+}

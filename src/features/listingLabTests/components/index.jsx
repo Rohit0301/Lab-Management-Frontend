@@ -2,10 +2,11 @@ import { Box, Button, Container, Typography } from "@mui/material";
 import React from "react";
 import AddTestModal from "./addTestModal";
 import { CustomTable } from "../../../components";
+import { TEST_COLUMN } from "../../../constants";
 
 export default function ListingLabTest() {
 	return (
-		<Container component="main" maxWidth="md">
+		<Container component="main" maxWidth="lg">
 			<Box
 				sx={{
 					mt: 3,
@@ -21,7 +22,7 @@ export default function ListingLabTest() {
 				</Typography>
 				<AddTestModal />
 			</Box>
-			<CustomTable />
+			<CustomTable columns={TEST_COLUMN} data={[]} />
 		</Container>
 	);
 }

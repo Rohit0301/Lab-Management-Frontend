@@ -22,6 +22,7 @@ const TestListing = React.lazy(() => import("../pages/TestListing"));
 const RouterCombiner = React.lazy(() => import("./RouterCombiner"));
 const PageNotFound = React.lazy(() => import("../pages/PageNotFound"));
 const PatientListing = React.lazy(() => import("../pages/PatientListing"));
+const Reports = React.lazy(() => import("../pages/Reports"));
 
 export const routes = [
 	{
@@ -83,7 +84,7 @@ export const routes = [
 		title: "List Reports",
 		path: LIST_REPORTS,
 		description: "List patient reports",
-		Component: TestListing,
+		Component: Reports,
 		private: true,
 		accessRoles: ALL_ROLES,
 		Layout: AuthLayout,
@@ -98,6 +99,7 @@ export const routes = [
 
 export const PageRoutes = () => {
 	const user = useSelector((state) => state.user);
+	console.log(user);
 	return (
 		<Router>
 			<RouterCombiner routes={routes} role={user?.role} />

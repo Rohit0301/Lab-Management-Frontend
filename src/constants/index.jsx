@@ -1,4 +1,10 @@
-import { HOME, LIST_PATIENTS, LIST_TEST, NEW_PATIENT } from "./routes";
+import {
+	HOME,
+	LIST_PATIENTS,
+	LIST_REPORTS,
+	LIST_TEST,
+	NEW_PATIENT,
+} from "./routes";
 import ActionColumn from "../features/listingPatients/components/ActionColumn";
 export const ALL_ROLES = ["laboratory", "user"];
 export const LABORATORY_ROLE = ["laboratory"];
@@ -45,7 +51,7 @@ export const SIDEBAR_MENU = [
 	{
 		id: 4,
 		label: "View Reports",
-		path: LIST_TEST,
+		path: LIST_REPORTS,
 		accessRoles: ALL_ROLES,
 	},
 ];
@@ -94,6 +100,38 @@ export const PATIENT_COLUMNS = [
 		render: (data) => {
 			return <ActionColumn data={data} />;
 		},
+	},
+];
+
+export const TEST_COLUMN = [
+	{
+		id: 1,
+		label: "Test Name",
+		key: "test_name",
+	},
+	{
+		id: 2,
+		label: "Sample Needed",
+		key: "sample_needed",
+	},
+	{
+		id: 3,
+		label: "Price",
+		key: "price",
+	},
+	{
+		id: 4,
+		label: "Type",
+		key: "type",
+	},
+	{
+		id: 5,
+		label: "Description",
+		key: "description",
+	},
+	{
+		id: 6,
+		label: "Action",
 	},
 ];
 

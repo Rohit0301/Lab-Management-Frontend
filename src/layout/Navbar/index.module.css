@@ -1,8 +1,8 @@
 .auth_btn{
-    color: white;
-    border-color: white;
+    color: white !important;
+    border-color: white !important;
 }
 
 .auth_btn:hover{
-    border-color: white;
+    border-color: white !important;
 }

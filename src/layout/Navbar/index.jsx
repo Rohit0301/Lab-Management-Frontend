@@ -1,12 +1,14 @@
 import React from "react";
 import { Box, Button, Typography, useTheme } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
 import { LOGIN } from "../../constants/routes";
+import { logoutUser } from "../../store/UserSlice";
 export default function Navbar() {
 	const theme = useTheme();
 	const user = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	return (
 		<Box
@@ -24,7 +26,11 @@ export default function Navbar() {
 				Live Health
 			</Typography>
 			{user.isLoggedIn ? (
-				<Button className={styles.auth_btn} variant="outlined">
+				<Button
+					className={styles.auth_btn}
+					variant="outlined"
+					onClick={() => dispatch(logoutUser())}
+				>
 					Logout
 				</Button>
 			) : (

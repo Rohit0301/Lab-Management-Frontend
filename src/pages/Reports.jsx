@@ -1,6 +1,6 @@
 import React from "react";
-import { PatientReports } from "../features/patientReports";
+import { ListingPatientReport } from "../features/listingReports";
 
 export default function Reports() {
-	return <PatientReports />;
+	return <ListingPatientReport />;
 }

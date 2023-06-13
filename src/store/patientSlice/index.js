@@ -40,11 +40,7 @@ export const patientSlice = createSlice({
 				}
 				state.addPatientLoading = false;
 			})
-			.addCase(deletePatient.fulfilled, (state, action) => {
-				console.log(action);
-				state.data = action.payload;
-				state.loading = false;
-			});
+			.addCase(deletePatient.fulfilled, (state, action) => {});
 	},
 });
 
