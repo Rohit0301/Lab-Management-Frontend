@@ -98,8 +98,7 @@ export const routes = [
 ];
 
 export const PageRoutes = () => {
-	const user = useSelector((state) => state.user);
-	console.log(user);
+	const user = useSelector((state) => state.auth);
 	return (
 		<Router>
 			<RouterCombiner routes={routes} role={user?.role} />

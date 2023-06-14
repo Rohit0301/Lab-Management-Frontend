@@ -15,9 +15,13 @@ import styles from "../index.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewPatient } from "../../../store/patientSlice/action";
 import { useEffect, useReducer } from "react";
-import { initialState, reducer } from "../reducer";
+
 import { useGlobalContext } from "../../../hooks";
 import { setPatientRegistrationError } from "../../../store/patientSlice";
+import {
+	patientRegistrationInitialState as initialState,
+	patientRegistrationReducer as reducer,
+} from "../reducer";
 
 export default function PateintRegistration() {
 	const reduxDispatch = useDispatch();

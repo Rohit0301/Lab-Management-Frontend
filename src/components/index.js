@@ -1,4 +1,5 @@
 import UserTypes from "./UserTypes";
 import CustomTable from "./Table";
 import CustomSnackbar from "./Snackbar";
-export { UserTypes, CustomTable, CustomSnackbar };
+import PasswordField from "./PasswordField";
+export { UserTypes, CustomTable, CustomSnackbar, PasswordField };

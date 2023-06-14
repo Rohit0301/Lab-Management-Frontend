@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "./UserSlice";
+import authSlice from "./authSlice";
 import patientSlice from "./patientSlice";
 import testSlice from "./testSlice";
 export default configureStore({
 	reducer: {
-		user: userSlice,
+		auth: authSlice,
 		patient: patientSlice,
 		test: testSlice,
 	},

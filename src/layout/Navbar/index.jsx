@@ -3,11 +3,10 @@ import { Box, Button, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
-import { LOGIN } from "../../constants/routes";
-import { logoutUser } from "../../store/UserSlice";
+import { logoutUser } from "../../store/authSlice";
 export default function Navbar() {
 	const theme = useTheme();
-	const user = useSelector((state) => state.user);
+	const user = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	return (
@@ -25,21 +24,13 @@ export default function Navbar() {
 			<Typography variant="h5" color="white">
 				Live Health
 			</Typography>
-			{user.isLoggedIn ? (
+			{user.isLoggedIn && (
 				<Button
 					className={styles.auth_btn}
 					variant="outlined"
 					onClick={() => dispatch(logoutUser())}
 				>
 					Logout
-				</Button>
-			) : (
-				<Button
-					onClick={() => navigate(LOGIN)}
-					className={styles.auth_btn}
-					variant="outlined"
-				>
-					Login
 				</Button>
 			)}
 		</Box>

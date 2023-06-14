@@ -14,7 +14,7 @@ export const USER_TYPES = [
 	{
 		id: 1,
 		label: "Patient",
-		value: "patient",
+		value: "user",
 	},
 	{
 		id: 2,
@@ -134,5 +134,3 @@ export const TEST_COLUMN = [
 		label: "Action",
 	},
 ];
-
-export const DEFAULT_USER = "patient";
