@@ -3,12 +3,13 @@ import { Box, Button, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styles from "./index.module.css";
-import { logoutUser } from "../../store/authSlice";
+import { logout } from "../../store/authSlice/action";
+
 export default function Navbar() {
 	const theme = useTheme();
 	const user = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
+
 	return (
 		<Box
 			bgcolor={theme.palette.primary.main}
@@ -28,7 +29,7 @@ export default function Navbar() {
 				<Button
 					className={styles.auth_btn}
 					variant="outlined"
-					onClick={() => dispatch(logoutUser())}
+					onClick={() => dispatch(logout(user.session_id))}
 				>
 					Logout
 				</Button>

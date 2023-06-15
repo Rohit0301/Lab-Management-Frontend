@@ -14,7 +14,7 @@ import { useTheme } from "@emotion/react";
 export default function Sidebar() {
 	const navigate = useNavigate();
 	const theme = useTheme();
-	const user = useSelector((state) => state.user);
+	const auth = useSelector((state) => state.auth);
 	const { pathname } = useLocation();
 
 	return (
@@ -22,7 +22,7 @@ export default function Sidebar() {
 			<List>
 				{SIDEBAR_MENU.map(
 					({ id, label, path, accessRoles }) =>
-						accessRoles.includes(user?.role) && (
+						accessRoles.includes(auth?.role) && (
 							<ListItem
 								key={id}
 								style={{

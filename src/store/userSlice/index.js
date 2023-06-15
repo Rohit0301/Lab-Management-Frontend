@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchTests } from "./action";
+import { fetchReports } from "./action";
+import { logout } from "../authSlice/action";
 
-export const testSlice = createSlice({
+export const userSlice = createSlice({
 	name: "patient",
 	initialState: {
 		data: [],
@@ -12,10 +13,10 @@ export const testSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchTests.pending, (state, action) => {
+			.addCase(fetchReports.pending, (state, action) => {
 				state.loading = true;
 			})
-			.addCase(fetchTests.fulfilled, (state, action) => {
+			.addCase(fetchReports.fulfilled, (state, action) => {
 				state.data = action.payload;
 				state.loading = false;
 			});
@@ -40,5 +41,5 @@ export const testSlice = createSlice({
 	},
 });
 
-// export const { setPatientRegistrationError } = testSlice.actions;
-export default testSlice.reducer;
+// export const { setPatientRegistrationError } = userSlice.actions;
+export default userSlice.reducer;

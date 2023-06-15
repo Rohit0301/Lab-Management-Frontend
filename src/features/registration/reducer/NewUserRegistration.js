@@ -10,7 +10,7 @@ export const newUserRegistrationInitialState = {
 		address: "",
 		phone_no: "",
 	},
-	isFromValid: false,
+	isFormValid: false,
 	errors: {},
 };
 
@@ -38,6 +38,8 @@ export const newUserRegistrationReducer = (state, action) => {
 					address: "",
 					phone_no: "",
 				},
+				errors: {},
+				isFormValid: false,
 			};
 		case "SET_DATA":
 			const { isValid, error_msg } = validateData(

@@ -13,11 +13,14 @@ import {
 } from "@mui/material";
 import styles from "../index.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addNewPatient } from "../../../store/patientSlice/action";
+import { addOrUpdateNewPatient } from "../../../store/patientSlice/action";
 import { useEffect, useReducer } from "react";
 
 import { useGlobalContext } from "../../../hooks";
-import { setPatientRegistrationError } from "../../../store/patientSlice";
+import {
+	setPatientDefaultValues,
+	setPatientRegistrationError,
+} from "../../../store/patientSlice";
 import {
 	patientRegistrationInitialState as initialState,
 	patientRegistrationReducer as reducer,
@@ -26,9 +29,20 @@ import {
 export default function PateintRegistration() {
 	const reduxDispatch = useDispatch();
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const { openNotification } = useGlobalContext();
-	const { loading, errors, status } = useSelector((state) => state.patient);
+	const { openNotification, isPatientEditing, patientData } =
+		useGlobalContext();
+	const { patient, user } = useSelector((state) => state);
+	const { loading, errors, status } = patient;
 	const { data } = state;
+
+	useEffect(() => {
+		if (isPatientEditing)
+			dispatch({
+				type: "SET_NEW_VALUES",
+				data: patientData,
+			});
+	}, [isPatientEditing]);
+
 	useEffect(() => {
 		if (status) {
 			openNotification({
@@ -36,6 +50,8 @@ export default function PateintRegistration() {
 				message:
 					status === "error"
 						? "Something went wrong"
+						: isPatientEditing
+						? "Patient updated successfully"
 						: "New patient added successfully !",
 			});
 			if (status === "success") {
@@ -43,12 +59,19 @@ export default function PateintRegistration() {
 					type: "RESET_FEILDS",
 				});
 			}
+			reduxDispatch(setPatientDefaultValues());
 		}
 	}, [status]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		reduxDispatch(addNewPatient({ ...state.data, lab: 4 }, 0));
+		reduxDispatch(
+			addOrUpdateNewPatient({
+				data: { ...state.data, lab: user?.id },
+				method: isPatientEditing ? "PATCH" : "POST",
+				patient_id: patientData?.id,
+			})
+		);
 	};
 
 	const handleChange = (e) => {
@@ -71,7 +94,7 @@ export default function PateintRegistration() {
 				}}
 			>
 				<Typography component="h1" variant="h5">
-					Add New Patient
+					{isPatientEditing ? "Update Patient Details" : "Add New Patient"}
 				</Typography>
 				<Box
 					component="form"
@@ -210,6 +233,8 @@ export default function PateintRegistration() {
 							>
 								{loading ? (
 									<CircularProgress style={{ color: "white" }} />
+								) : isPatientEditing ? (
+									"Update Details"
 								) : (
 									"Submit"
 								)}

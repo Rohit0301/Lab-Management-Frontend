@@ -19,15 +19,16 @@ export const fetchPatient = createAsyncThunk(
 	}
 );
 
-export const addNewPatient = createAsyncThunk(
-	"addNewPatient",
-	async (data, patient_id) => {
+export const addOrUpdateNewPatient = createAsyncThunk(
+	"addOrUpdateNewPatient",
+	async (payload) => {
 		const response = await Request({
-			method: "POST",
-			endpoint: MUTATE_LAB_PATIENT_API + "0/",
-			data: data,
+			method: payload.method,
+			endpoint: MUTATE_LAB_PATIENT_API + `${payload?.patient_id | 0}/`,
+			data: payload.data,
 		});
-		if (response.status === 201) return response.data;
+		if (response.status === 201 || response.status === 200)
+			return response.data;
 		else
 			return {
 				...response.data,

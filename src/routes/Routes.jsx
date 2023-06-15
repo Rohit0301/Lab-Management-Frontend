@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { UnAuthLayout, AuthLayout } from "../layout";
-import { BrowserRouter as Router } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { BrowserRouter as Router, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Home from "../pages/Home";
 import {
 	ASSIGN_TEST,
@@ -14,16 +14,24 @@ import {
 	REGISTER,
 } from "../constants/routes";
 import { ALL_ROLES, LABORATORY_ROLE } from "../constants";
-const Login = React.lazy(() => import("../pages/Login"));
-const Register = React.lazy(() => import("../pages/Register"));
-const RegisterPatient = React.lazy(() => import("../pages/RegisterPatient"));
-const TestAssignment = React.lazy(() => import("../pages/TestAssignment"));
-const TestListing = React.lazy(() => import("../pages/TestListing"));
-const RouterCombiner = React.lazy(() => import("./RouterCombiner"));
-const PageNotFound = React.lazy(() => import("../pages/PageNotFound"));
-const PatientListing = React.lazy(() => import("../pages/PatientListing"));
-const Reports = React.lazy(() => import("../pages/Reports"));
-
+// const Login = React.lazy(() => import("../pages/Login"));
+// const Register = React.lazy(() => import("../pages/Register"));
+// const RegisterPatient = React.lazy(() => import("../pages/RegisterPatient"));
+// const TestAssignment = React.lazy(() => import("../pages/TestAssignment"));
+// const TestListing = React.lazy(() => import("../pages/TestListing"));
+// const RouterCombiner = React.lazy(() => import("./RouterCombiner"));
+// const PageNotFound = React.lazy(() => import("../pages/PageNotFound"));
+// const PatientListing = React.lazy(() => import("../pages/PatientListing"));
+// const Reports = React.lazy(() => import("../pages/Reports"));
+import PatientListing from "../pages/PatientListing";
+import PageNotFound from "../pages/PageNotFound";
+import Reports from "../pages/Reports";
+import RouterCombiner from "./RouterCombiner";
+import TestAssignment from "../pages/TestAssignment";
+import TestListing from "../pages/TestListing";
+import RegisterPatient from "../pages/RegisterPatient";
+import Register from "../pages/Register";
+import Login from "../pages/Login";
 export const routes = [
 	{
 		title: "Login",
@@ -98,10 +106,15 @@ export const routes = [
 ];
 
 export const PageRoutes = () => {
-	const user = useSelector((state) => state.auth);
+	const auth = useSelector((state) => state.auth);
+
 	return (
 		<Router>
-			<RouterCombiner routes={routes} role={user?.role} />
+			<RouterCombiner
+				routes={routes}
+				role={auth?.role}
+				isLoggedIn={auth?.isLoggedIn}
+			/>
 		</Router>
 	);
 };

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addNewPatient, fetchPatient, deletePatient } from "./action";
+import { addOrUpdateNewPatient, fetchPatient, deletePatient } from "./action";
 
 export const patientSlice = createSlice({
 	name: "patient",
@@ -12,6 +12,13 @@ export const patientSlice = createSlice({
 		deleteStatus: "",
 	},
 	reducers: {
+		setPatientDefaultValues: (state, action) => {
+			state.loading = false;
+			state.errors = {};
+			state.status = "";
+			state.addPatientLoading = false;
+			state.deleteStatus = "";
+		},
 		setPatientRegistrationError: (state, action) => {
 			const key = action.payload;
 			const errors = state.errors;
@@ -29,15 +36,19 @@ export const patientSlice = createSlice({
 				state.loading = false;
 			})
 
-			.addCase(addNewPatient.pending, (state, action) => {
+			.addCase(addOrUpdateNewPatient.pending, (state, action) => {
 				state.addPatientLoading = true;
 			})
-			.addCase(addNewPatient.fulfilled, (state, action) => {
+			.addCase(addOrUpdateNewPatient.fulfilled, (state, action) => {
 				if (action.payload.error) {
 					state.errors = action.payload;
 					state.status = "error";
 				} else {
 					state.status = "success";
+					let data = state.data.filter(
+						(item) => item?.id != action.payload?.id
+					);
+					state.data = [...data, action.payload];
 				}
 				state.addPatientLoading = false;
 			})
@@ -49,5 +60,6 @@ export const patientSlice = createSlice({
 	},
 });
 
-export const { setPatientRegistrationError } = patientSlice.actions;
+export const { setPatientRegistrationError, setPatientDefaultValues } =
+	patientSlice.actions;
 export default patientSlice.reducer;

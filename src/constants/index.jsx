@@ -5,7 +5,8 @@ import {
 	LIST_TEST,
 	NEW_PATIENT,
 } from "./routes";
-import ActionColumn from "../features/listingPatients/components/ActionColumn";
+import LabActionColumn from "../features/listingLabTests/components/ActionColumn";
+import PatientActionColumn from "../features/listingPatients/components/ActionColumn";
 export const ALL_ROLES = ["laboratory", "user"];
 export const LABORATORY_ROLE = ["laboratory"];
 export const USER_ROLE = ["user"];
@@ -98,7 +99,7 @@ export const PATIENT_COLUMNS = [
 		label: "Action",
 		align: "center",
 		render: (data) => {
-			return <ActionColumn data={data} />;
+			return <PatientActionColumn data={data} />;
 		},
 	},
 ];
@@ -132,5 +133,8 @@ export const TEST_COLUMN = [
 	{
 		id: 6,
 		label: "Action",
+		render: (data) => {
+			return <LabActionColumn data={data} />;
+		},
 	},
 ];

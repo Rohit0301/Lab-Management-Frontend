@@ -1,41 +1,59 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, CircularProgress, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import styles from "../index.module.css";
 import BillTable from "./BillTable";
 
-export default function ReportTable() {
+export default function ReportTable({
+	columns,
+	innerColumns,
+	data,
+	loading,
+	role,
+}) {
 	return (
 		<Box className={styles.report_table}>
-			<TableHead />
-			<TableRow />
-			<TableRow />
-			<TableRow />
-			<TableRow />
-			<TableRow />
-			<TableRow />
+			<TableHead columns={columns} role={role} />
+			{loading ? (
+				<CircularProgress />
+			) : (
+				data.map((row) => {
+					return (
+						<TableRow
+							key={row.id}
+							data={row}
+							role={role}
+							columns={columns}
+							innerColumns={innerColumns}
+						/>
+					);
+				})
+			)}
 		</Box>
 	);
 }
 
-export const TableHead = () => {
+export const TableHead = ({ columns, role }) => {
 	return (
-		<Box className={styles.report_head}>
-			<Box className="bold">Sr No.</Box>
-			<Box className="bold">Patient Name</Box>
-			<Box className="bold">Bill No.</Box>
-			<Box className="bold">Test Names</Box>
+		<Box
+			className={role === "user" ? styles.report_head : styles.report_head_lab}
+		>
+			{columns.map((col) => (
+				<Box key={col.id} className="bold">
+					{col.name}
+				</Box>
+			))}
 			<Box className="bold">Action</Box>
 		</Box>
 	);
 };
 
-export const TableRow = () => {
+export const TableRow = ({ data, columns, innerColumns, role }) => {
 	const theme = useTheme();
 	const [open, setOpen] = useState(false);
 	return (
 		<Box>
 			<Box
-				className={styles.report_row}
+				className={role === "user" ? styles.report_row : styles.report_row_lab}
 				style={{
 					background: open && theme.palette.primary.main,
 					color: open && "#fff",
@@ -43,10 +61,11 @@ export const TableRow = () => {
 					borderBottomRightRadius: open && 0,
 				}}
 			>
-				<Box>1</Box>
-				<Box className="bold">Rohit Jain</Box>
-				<Box>12, 23</Box>
-				<Box>Blood test, Sugar test</Box>
+				{columns.map((col) => (
+					<Box key={col.id} className="bold">
+						{col?.render ? col.render(data) : data[col.key]}
+					</Box>
+				))}
 				<Box
 					style={{
 						color: !open && theme.palette.primary.main,
@@ -66,7 +85,10 @@ export const TableRow = () => {
 						borderBottomRightRadius: "4px",
 					}}
 				>
-					<BillTable />
+					<BillTable
+						data={role == "user" ? data.tests : data.reports}
+						columns={innerColumns}
+					/>
 				</Box>
 			)}
 		</Box>

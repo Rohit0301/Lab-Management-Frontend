@@ -1,9 +1,9 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import PageNotFound from "../pages/PageNotFound";
 import { HOME, LOGIN } from "../constants/routes";
+import Root from "./Root";
 
-const RouterCombiner = ({ routes, role }) => {
+const RouterCombiner = ({ routes, isLoggedIn }) => {
 	const RoutesMap = routes.map(
 		({
 			accessRoles,
@@ -12,13 +12,6 @@ const RouterCombiner = ({ routes, role }) => {
 			Component,
 			path,
 		}) => {
-			const ComponentWithLayout = () => {
-				return (
-					<Layout>
-						<Component />
-					</Layout>
-				);
-			};
 			return Array.isArray(accessRoles)
 				? [
 						<Route
@@ -26,12 +19,14 @@ const RouterCombiner = ({ routes, role }) => {
 							exact={exact}
 							path={path}
 							element={
-								!role ? (
+								!isLoggedIn ? (
 									<Navigate to={LOGIN} />
-								) : accessRoles.includes(role) ? (
-									<ComponentWithLayout />
 								) : (
-									<PageNotFound />
+									<Root
+										Component={Component}
+										Layout={Layout}
+										accessRoles={accessRoles}
+									/>
 								)
 							}
 						/>,
@@ -40,7 +35,13 @@ const RouterCombiner = ({ routes, role }) => {
 						<Route
 							key={path}
 							exact={exact}
-							element={role ? <Navigate to={HOME} /> : <ComponentWithLayout />}
+							element={
+								isLoggedIn ? (
+									<Navigate to={HOME} />
+								) : (
+									<Root Component={Component} Layout={Layout} />
+								)
+							}
 							path={path}
 						/>,
 				  ];

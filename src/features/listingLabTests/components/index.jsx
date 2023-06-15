@@ -1,18 +1,19 @@
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import React, { useEffect } from "react";
-import AddTestModal from "./addTestModal";
+import AddTestModal from "./AddTestModal";
 import { CustomTable } from "../../../components";
 import { TEST_COLUMN } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTests } from "../../../store/testSlice/action";
+import { fetchTests } from "../../../store/labSlice/action";
 
 export default function ListingLabTest() {
 	const lab_id = 4;
 	const dispatch = useDispatch();
-	const { data, loading } = useSelector((state) => state.test);
+	const { test_data: data, loading } = useSelector((state) => state.lab);
 	useEffect(() => {
 		if (!data || data.length === 0) dispatch(fetchTests(lab_id));
 	}, []);
+	console.log(data, "lab test");
 	return (
 		<Container component="main" maxWidth="lg">
 			<Box
