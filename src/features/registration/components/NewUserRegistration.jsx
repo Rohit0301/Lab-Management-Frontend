@@ -12,6 +12,7 @@ import {
 import { labRegister, userRegister } from "../../../store/authSlice/action";
 import { setDefaultValues } from "../../../store/authSlice";
 import { checkFormValid } from "../reducer/NewUserRegistration";
+import { LABORATORY_ROLE, USER_ROLE } from "../../../constants";
 
 export default function RegistrationPresenter() {
 	const reduxDispatch = useDispatch();
@@ -58,7 +59,7 @@ export default function RegistrationPresenter() {
 		e.preventDefault();
 		const isFormValid = checkFormValid(state, dispatch, userType);
 		if (!isFormValid) return;
-		if (userType === "user") {
+		if (userType === USER_ROLE) {
 			reduxDispatch(userRegister({ ...data }));
 		} else {
 			reduxDispatch(labRegister({ ...data }));
@@ -95,7 +96,7 @@ export default function RegistrationPresenter() {
 					autoComplete="off"
 				>
 					<UserTypes title="Register for" />
-					{userType === "user" ? (
+					{userType === USER_ROLE ? (
 						<TextField
 							margin="normal"
 							required
@@ -162,7 +163,7 @@ export default function RegistrationPresenter() {
 						error={errors?.confirm_password ? true : false}
 						helperText={errors?.confirm_password}
 					/>
-					{userType === "laboratory" && (
+					{userType === LABORATORY_ROLE && (
 						<>
 							<TextField
 								margin="normal"

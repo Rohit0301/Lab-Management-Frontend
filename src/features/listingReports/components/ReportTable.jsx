@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styles from "../index.module.css";
 import BillTable from "./BillTable";
 import { ComponentLoader } from "../../../components";
+import { USER_ROLE } from "../../../constants";
 
 export default function ReportTable({
 	columns,
@@ -15,10 +16,10 @@ export default function ReportTable({
 		<Box className={styles.report_table}>
 			<TableHead columns={columns} role={role} />
 			<ComponentLoader loading={loading}>
-				{data.map((row) => {
+				{data.map((row, index) => {
 					return (
 						<TableRow
-							key={row.id}
+							key={index}
 							data={row}
 							role={role}
 							columns={columns}
@@ -34,7 +35,9 @@ export default function ReportTable({
 export const TableHead = ({ columns, role }) => {
 	return (
 		<Box
-			className={role === "user" ? styles.report_head : styles.report_head_lab}
+			className={
+				role === USER_ROLE ? styles.report_head : styles.report_head_lab
+			}
 		>
 			{columns.map((col) => (
 				<Box key={col.id} className="bold">
@@ -52,7 +55,9 @@ export const TableRow = ({ data, columns, innerColumns, role }) => {
 	return (
 		<Box>
 			<Box
-				className={role === "user" ? styles.report_row : styles.report_row_lab}
+				className={
+					role === USER_ROLE ? styles.report_row : styles.report_row_lab
+				}
 				style={{
 					background: open && theme.palette.primary.main,
 					color: open && "#fff",
@@ -85,7 +90,7 @@ export const TableRow = ({ data, columns, innerColumns, role }) => {
 					}}
 				>
 					<BillTable
-						data={role == "user" ? data.tests : data.reports}
+						data={role == USER_ROLE ? data.tests : data.reports}
 						columns={innerColumns}
 					/>
 				</Box>

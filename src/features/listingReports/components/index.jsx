@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchReports } from "../../../store/userSlice/action";
 import { fetchLabReports } from "../../../store/labSlice/action";
 import { getTableSchema } from "../../../constants/report";
+import { USER_ROLE } from "../../../constants";
 
 export default function ListingPatientReport() {
 	const dispatch = useDispatch();
 	const { user, auth, lab } = useSelector((state) => state);
 	useEffect(() => {
-		dispatch(auth.role === "user" ? fetchReports() : fetchLabReports());
+		dispatch(auth.role === USER_ROLE ? fetchReports() : fetchLabReports());
 	}, []);
 	const schema = getTableSchema(auth.role);
 	return (
@@ -32,8 +33,8 @@ export default function ListingPatientReport() {
 			<ReportTable
 				columns={schema["columns"]}
 				innerColumns={schema["innerColumns"]}
-				data={auth.role === "user" ? user.data : lab.report_data}
-				loading={auth.role === "user" ? user.loading : lab.loading}
+				data={auth.role === USER_ROLE ? user.data : lab.report_data}
+				loading={auth.role === USER_ROLE ? user.loading : lab.loading}
 				role={auth.role}
 			/>
 		</Container>

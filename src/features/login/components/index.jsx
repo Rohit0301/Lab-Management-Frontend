@@ -8,6 +8,7 @@ import { useGlobalContext } from "../../../hooks";
 import { initialState, reducer } from "../reducer";
 import { setDefaultValues } from "../../../store/authSlice";
 import { laboratoryLogin, userLogin } from "../../../store/authSlice/action";
+import { USER_ROLE } from "../../../constants";
 
 export default function LoginPresenter() {
 	const reduxDispatch = useDispatch();
@@ -62,7 +63,7 @@ export default function LoginPresenter() {
 			type: "SET_EMPTY_FIELD_ERROR",
 			cb: () =>
 				reduxDispatch(
-					userType === "user" ? userLogin(data) : laboratoryLogin(data)
+					userType === USER_ROLE ? userLogin(data) : laboratoryLogin(data)
 				),
 		});
 	};

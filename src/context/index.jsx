@@ -1,8 +1,9 @@
 import React, { createContext, useState } from "react";
+import { USER_ROLE } from "../constants";
 export const globalContext = createContext();
 export default function GlobalContext({ children }) {
 	const [snackbarData, setSnackBarData] = useState({});
-	const [userType, setUserType] = useState("user");
+	const [userType, setUserType] = useState(USER_ROLE);
 	const [testData, setTestData] = useState();
 	const [isTestEditing, setIsTestEditing] = useState(false);
 	const [patientData, setPatienData] = useState();

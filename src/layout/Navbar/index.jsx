@@ -3,13 +3,14 @@ import { Avatar, Box, Button, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./index.module.css";
 import { logout } from "../../store/authSlice/action";
+import { USER_ROLE } from "../../constants";
 
 export default function Navbar() {
 	const theme = useTheme();
 	const auth = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 	const getUserName = () => {
-		if (auth.role === "user") return auth.user.full_name;
+		if (auth.role === USER_ROLE) return auth.user.full_name;
 		else return auth.user.name;
 	};
 	return (

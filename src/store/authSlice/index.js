@@ -10,6 +10,7 @@ import {
 	userRegister,
 } from "./action";
 import { RetriveServerError } from "../../utils/RetriveServerErrors";
+import { LABORATORY_ROLE, USER_ROLE } from "../../constants";
 
 export const authSlice = createSlice({
 	name: "auth",
@@ -90,7 +91,7 @@ export const authSlice = createSlice({
 			})
 			.addCase(fetchUser.fulfilled, (state, action) => {
 				state.user = action.payload;
-				state.role = "user";
+				state.role = USER_ROLE;
 				state.globalLoader = false;
 			})
 			.addCase(fetchUser.rejected, (state, action) => {
@@ -98,7 +99,7 @@ export const authSlice = createSlice({
 			})
 			.addCase(fetchLaboratory.fulfilled, (state, action) => {
 				state.user = action.payload;
-				state.role = "laboratory";
+				state.role = LABORATORY_ROLE;
 				state.globalLoader = false;
 			})
 			.addCase(fetchLaboratory.rejected, (state, action) => {
@@ -111,7 +112,7 @@ export const authSlice = createSlice({
 			.addCase(userLogin.fulfilled, (state, action) => {
 				if (action.payload?.id) {
 					state.status = "success";
-					state.role = "user";
+					state.role = USER_ROLE;
 					state.user = action.payload;
 					state.isLoggedIn = true;
 					localStorage.setItem("session_id", action.payload.session_id);
@@ -128,7 +129,7 @@ export const authSlice = createSlice({
 			.addCase(laboratoryLogin.fulfilled, (state, action) => {
 				if (action.payload?.id) {
 					state.status = "success";
-					state.role = "laboratory";
+					state.role = LABORATORY_ROLE;
 					state.user = action.payload;
 					state.isLoggedIn = true;
 					localStorage.setItem("session_id", action.payload.session_id);

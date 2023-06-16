@@ -8,20 +8,22 @@ import {
 } from "./routes";
 import LabActionColumn from "../features/listingLabTests/components/ActionColumn";
 import PatientActionColumn from "../features/listingPatients/components/ActionColumn";
-export const ALL_ROLES = ["laboratory", "user"];
-export const LABORATORY_ROLE = ["laboratory"];
-export const USER_ROLE = ["user"];
+export const LABORATORY_ROLE = "laboratory";
+export const USER_ROLE = "user";
+export const ALL_ROLES = [LABORATORY_ROLE, USER_ROLE];
+export const LABORATORY = [LABORATORY_ROLE];
+export const USER = [USER_ROLE];
 
 export const USER_TYPES = [
 	{
 		id: 1,
 		label: "Patient",
-		value: "user",
+		value: USER_ROLE,
 	},
 	{
 		id: 2,
 		label: "Laboratory",
-		value: "laboratory",
+		value: LABORATORY_ROLE,
 	},
 ];
 

@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import moment from "moment";
+import { USER_ROLE } from ".";
 export const LabColumns = [
 	{
 		id: 1,
@@ -176,7 +177,7 @@ export const LabInnerColumns = [
 
 export const getTableSchema = (role) => {
 	return {
-		columns: role === "user" ? PatientColumns : LabColumns,
-		innerColumns: role === "user" ? PatientInnerColumns : LabInnerColumns,
+		columns: role === USER_ROLE ? PatientColumns : LabColumns,
+		innerColumns: role === USER_ROLE ? PatientInnerColumns : LabInnerColumns,
 	};
 };

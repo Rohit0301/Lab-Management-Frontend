@@ -13,7 +13,7 @@ import {
 	NEW_PATIENT,
 	REGISTER,
 } from "../constants/routes";
-import { ALL_ROLES, LABORATORY_ROLE } from "../constants";
+import { ALL_ROLES, LABORATORY } from "../constants";
 import PatientListing from "../pages/PatientListing";
 import PageNotFound from "../pages/PageNotFound";
 import Reports from "../pages/Reports";
@@ -51,7 +51,7 @@ export const routes = [
 		path: NEW_PATIENT,
 		description: "Add New Patient",
 		Component: RegisterPatient,
-		accessRoles: LABORATORY_ROLE,
+		accessRoles: LABORATORY,
 		Layout: AuthLayout,
 	},
 	{
@@ -59,7 +59,7 @@ export const routes = [
 		path: ASSIGN_TEST,
 		description: "Assign test to patients",
 		Component: TestAssignment,
-		accessRoles: LABORATORY_ROLE,
+		accessRoles: LABORATORY,
 		Layout: AuthLayout,
 	},
 	{
@@ -67,7 +67,7 @@ export const routes = [
 		path: LIST_TEST,
 		description: "List all the test available in the lab",
 		Component: TestListing,
-		accessRoles: LABORATORY_ROLE,
+		accessRoles: LABORATORY,
 		Layout: AuthLayout,
 	},
 	{
@@ -75,7 +75,7 @@ export const routes = [
 		path: LIST_PATIENTS,
 		description: "List all the patients registered in a lab",
 		Component: PatientListing,
-		accessRoles: LABORATORY_ROLE,
+		accessRoles: LABORATORY,
 		Layout: AuthLayout,
 	},
 	{
