@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { UnAuthLayout, AuthLayout } from "../layout";
 import { BrowserRouter as Router, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Home from "../pages/Home";
 import {
 	ASSIGN_TEST,
@@ -14,15 +14,6 @@ import {
 	REGISTER,
 } from "../constants/routes";
 import { ALL_ROLES, LABORATORY_ROLE } from "../constants";
-// const Login = React.lazy(() => import("../pages/Login"));
-// const Register = React.lazy(() => import("../pages/Register"));
-// const RegisterPatient = React.lazy(() => import("../pages/RegisterPatient"));
-// const TestAssignment = React.lazy(() => import("../pages/TestAssignment"));
-// const TestListing = React.lazy(() => import("../pages/TestListing"));
-// const RouterCombiner = React.lazy(() => import("./RouterCombiner"));
-// const PageNotFound = React.lazy(() => import("../pages/PageNotFound"));
-// const PatientListing = React.lazy(() => import("../pages/PatientListing"));
-// const Reports = React.lazy(() => import("../pages/Reports"));
 import PatientListing from "../pages/PatientListing";
 import PageNotFound from "../pages/PageNotFound";
 import Reports from "../pages/Reports";
@@ -84,7 +75,6 @@ export const routes = [
 		path: LIST_PATIENTS,
 		description: "List all the patients registered in a lab",
 		Component: PatientListing,
-		private: true,
 		accessRoles: LABORATORY_ROLE,
 		Layout: AuthLayout,
 	},
@@ -93,7 +83,6 @@ export const routes = [
 		path: LIST_REPORTS,
 		description: "List patient reports",
 		Component: Reports,
-		private: true,
 		accessRoles: ALL_ROLES,
 		Layout: AuthLayout,
 	},

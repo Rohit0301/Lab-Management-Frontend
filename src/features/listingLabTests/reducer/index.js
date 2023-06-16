@@ -22,15 +22,7 @@ export const reducer = (state, action) => {
 				},
 			};
 		case "RESET_FEILDS":
-			return {
-				data: {
-					name: "",
-					test_type: "",
-					description: "",
-					sample_needed: "",
-					price: "",
-				},
-			};
+			return initialState;
 		case "SET_DATA":
 			return {
 				...state,

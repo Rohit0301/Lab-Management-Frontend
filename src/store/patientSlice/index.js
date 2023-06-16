@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addOrUpdateNewPatient, fetchPatient, deletePatient } from "./action";
+import {
+	addOrUpdateNewPatient,
+	fetchPatient,
+	deletePatient,
+	searchPatient,
+} from "./action";
 
 export const patientSlice = createSlice({
 	name: "patient",
 	initialState: {
 		data: [],
 		loading: false,
+		searchedResults: [],
 		errors: {},
 		status: "",
 		addPatientLoading: false,
@@ -18,6 +24,7 @@ export const patientSlice = createSlice({
 			state.status = "";
 			state.addPatientLoading = false;
 			state.deleteStatus = "";
+			state.searchedResults = [];
 		},
 		setPatientRegistrationError: (state, action) => {
 			const key = action.payload;
@@ -35,7 +42,13 @@ export const patientSlice = createSlice({
 				state.data = action.payload;
 				state.loading = false;
 			})
-
+			.addCase(searchPatient.pending, (state, action) => {
+				state.loading = true;
+			})
+			.addCase(searchPatient.fulfilled, (state, action) => {
+				state.searchedResults = action.payload;
+				state.loading = false;
+			})
 			.addCase(addOrUpdateNewPatient.pending, (state, action) => {
 				state.addPatientLoading = true;
 			})

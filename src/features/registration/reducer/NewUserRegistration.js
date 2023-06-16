@@ -1,4 +1,5 @@
 import { EMAIL_REGEX } from "../../../constants/regex";
+import { initialState } from "../../listingLabTests/reducer";
 
 export const newUserRegistrationInitialState = {
 	data: {
@@ -10,7 +11,6 @@ export const newUserRegistrationInitialState = {
 		address: "",
 		phone_no: "",
 	},
-	isFormValid: false,
 	errors: {},
 };
 
@@ -25,25 +25,24 @@ const fields = {
 		"phone_no",
 	],
 };
+
 export const newUserRegistrationReducer = (state, action) => {
 	switch (action.type) {
-		case "RESET_FEILDS":
+		case "RESET_FIELDS":
+			return initialState;
+		case "SET_ERROR":
+			console.log("enter");
 			return {
-				data: {
-					full_name: "",
-					name: "",
-					email_id: "",
-					password: "",
-					confirm_password: "",
-					address: "",
-					phone_no: "",
+				...state,
+				errors: {
+					...state.errors,
+					[action.key]: action.value,
 				},
-				errors: {},
-				isFormValid: false,
 			};
 		case "SET_DATA":
-			const { isValid, error_msg } = validateData(
+			const { error_msg } = validateData(
 				state,
+				action.dispatch,
 				action.key,
 				action.value
 			);
@@ -57,32 +56,33 @@ export const newUserRegistrationReducer = (state, action) => {
 					...state.errors,
 					[action.key]: error_msg,
 				},
-				isFormValid: isValid,
-			};
-		case "SET_EMPTY_FIELD_ERROR":
-			let errors = state.errors;
-			let data = state.data;
-			let isValidData = true;
-			fields[action.value].map((key) => {
-				if (!data[key]) {
-					errors = {
-						...errors,
-						[key]: "Required!",
-					};
-					isValidData = false;
-				}
-			});
-			return {
-				...state,
-				errors: errors,
-				isFormValid: isValidData,
 			};
 		default:
 			return state;
 	}
 };
 
-const validateData = (state, key, value) => {
+export const checkFormValid = (state, dispatch, userType) => {
+	let isFormValid = true;
+	fields[userType].map((key) => {
+		const { isValid, error_msg } = validateData(
+			state,
+			dispatch,
+			key,
+			state.data[key]
+		);
+		if (!isValid) {
+			dispatch({
+				type: "SET_ERROR",
+				key: key,
+				value: error_msg,
+			});
+		}
+		isFormValid &= isValid;
+	});
+	return isFormValid;
+};
+const validateData = (state, dispatch, key, value) => {
 	let isValid = true;
 	let error_msg = "";
 	if (!value) {
@@ -99,6 +99,16 @@ const validateData = (state, key, value) => {
 			}
 			break;
 		case "password":
+			let password_match_message = "";
+			if (state.data.confirm_password && value != state.data.confirm_password) {
+				password_match_message = "Password doesn't match";
+			}
+
+			dispatch({
+				type: "SET_ERROR",
+				key: "confirm_password",
+				value: password_match_message,
+			});
 			if (value.length < 8) {
 				isValid = false;
 				error_msg = "length must be greater than 8 characters";

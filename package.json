@@ -16,6 +16,7 @@
     "@mui/material": "^5.13.4",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
+    "easyinvoice": "^3.0.23",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",

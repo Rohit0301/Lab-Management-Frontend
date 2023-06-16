@@ -1,12 +1,5 @@
-import {
-	Button,
-	TextField,
-	Box,
-	Typography,
-	Container,
-	CircularProgress,
-} from "@mui/material";
-import { PasswordField, UserTypes } from "../../../components";
+import { TextField, Box, Typography, Container } from "@mui/material";
+import { LoaderButton, PasswordField, UserTypes } from "../../../components";
 import { LOGIN } from "../../../constants/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,16 +9,19 @@ import {
 	newUserRegistrationInitialState as initialState,
 	newUserRegistrationReducer as reducer,
 } from "../reducer";
-import { userRegister } from "../../../store/authSlice/action";
+import { labRegister, userRegister } from "../../../store/authSlice/action";
 import { setDefaultValues } from "../../../store/authSlice";
+import { checkFormValid } from "../reducer/NewUserRegistration";
 
 export default function RegistrationPresenter() {
 	const reduxDispatch = useDispatch();
 	const navigate = useNavigate();
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const { openNotification, userType } = useGlobalContext();
-	const { loading, status } = useSelector((state) => state.auth);
-	const { data, isFormValid, errors } = state;
+	const { loading, registeredStatus, serverError } = useSelector(
+		(state) => state.auth
+	);
+	const { data, errors } = state;
 
 	useEffect(() => {
 		dispatch({
@@ -35,35 +31,37 @@ export default function RegistrationPresenter() {
 
 	useEffect(() => {
 		reduxDispatch(setDefaultValues());
+		return () => {
+			reduxDispatch(setDefaultValues());
+		};
 	}, []);
 
 	useEffect(() => {
-		if (status) {
+		if (registeredStatus) {
 			openNotification({
-				type: status,
+				type: registeredStatus,
 				message:
-					status === "error"
-						? "Something went wrong"
+					registeredStatus === "error"
+						? serverError || "Something went wrong"
 						: "Registered, please login to continue!",
 			});
-			if (status === "success") {
+			if (registeredStatus === "success") {
 				dispatch({
-					type: "RESET_FEILDS",
+					type: "RESET_FIELDS",
 				});
 				navigate(LOGIN);
 			}
 		}
-	}, [status]);
+	}, [registeredStatus]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch({
-			type: "SET_EMPTY_FIELD_ERROR",
-			value: userType,
-		});
+		const isFormValid = checkFormValid(state, dispatch, userType);
 		if (!isFormValid) return;
 		if (userType === "user") {
-			reduxDispatch(userRegister(data));
+			reduxDispatch(userRegister({ ...data }));
+		} else {
+			reduxDispatch(labRegister({ ...data }));
 		}
 	};
 
@@ -72,6 +70,8 @@ export default function RegistrationPresenter() {
 			type: "SET_DATA",
 			key: e.target.name,
 			value: e.target.value,
+			dispatch: dispatch,
+			userType: userType,
 		});
 	};
 	return (
@@ -194,19 +194,15 @@ export default function RegistrationPresenter() {
 							/>
 						</>
 					)}
-					<Button
+					<LoaderButton
 						type="submit"
 						fullWidth
 						variant="contained"
-						disabled={loading || !isFormValid}
+						loading={loading}
 						sx={{ mt: 3, mb: 2, p: 1.5 }}
 					>
-						{loading ? (
-							<CircularProgress style={{ color: "#fff" }} />
-						) : (
-							"Register"
-						)}
-					</Button>
+						Register
+					</LoaderButton>
 					<Typography sx={{ float: "right" }}>
 						Already have an account?
 						<Link to={LOGIN}> Sign In</Link>

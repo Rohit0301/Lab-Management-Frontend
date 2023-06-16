@@ -13,21 +13,19 @@ export default function CustomSnackbar() {
 	};
 
 	return (
-		<div>
-			<Snackbar
-				open={snackbarData?.open}
-				autoHideDuration={3000}
+		<Snackbar
+			open={snackbarData?.open}
+			autoHideDuration={3000}
+			onClose={handleClose}
+			anchorOrigin={{ vertical: "top", horizontal: "right" }}
+		>
+			<Alert
 				onClose={handleClose}
-				anchorOrigin={{ vertical: "top", horizontal: "right" }}
+				severity={snackbarData?.type}
+				sx={{ width: "100%" }}
 			>
-				<Alert
-					onClose={handleClose}
-					severity={snackbarData?.type}
-					sx={{ width: "100%" }}
-				>
-					{snackbarData?.message}
-				</Alert>
-			</Snackbar>
-		</div>
+				{snackbarData?.message}
+			</Alert>
+		</Snackbar>
 	);
 }

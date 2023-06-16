@@ -1,12 +1,5 @@
-import {
-	Button,
-	TextField,
-	Box,
-	Typography,
-	Container,
-	CircularProgress,
-} from "@mui/material";
-import { PasswordField, UserTypes } from "../../../components";
+import { TextField, Box, Typography, Container } from "@mui/material";
+import { LoaderButton, PasswordField, UserTypes } from "../../../components";
 import { Link, useNavigate } from "react-router-dom";
 import { HOME, REGISTER } from "../../../constants/routes";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +25,9 @@ export default function LoginPresenter() {
 
 	useEffect(() => {
 		reduxDispatch(setDefaultValues());
+		return () => {
+			reduxDispatch(setDefaultValues());
+		};
 	}, []);
 
 	useEffect(() => {
@@ -116,19 +112,16 @@ export default function LoginPresenter() {
 						error={errors?.password ? true : false}
 						helperText={errors?.password}
 					/>
-					<Button
+					<LoaderButton
 						type="submit"
 						fullWidth
+						loading={loading}
 						variant="contained"
-						disabled={loading}
 						sx={{ mt: 3, mb: 2, p: 1.5 }}
 					>
-						{loading ? (
-							<CircularProgress style={{ color: "white" }} />
-						) : (
-							"Sign In"
-						)}
-					</Button>
+						Sign In
+					</LoaderButton>
+
 					<Typography sx={{ float: "right" }}>
 						Don't have an account?
 						<Link to={REGISTER}> Register</Link>

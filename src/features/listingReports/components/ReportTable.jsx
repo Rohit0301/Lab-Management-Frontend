@@ -1,7 +1,8 @@
-import { Box, CircularProgress, useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import React, { useState } from "react";
 import styles from "../index.module.css";
 import BillTable from "./BillTable";
+import { ComponentLoader } from "../../../components";
 
 export default function ReportTable({
 	columns,
@@ -13,10 +14,8 @@ export default function ReportTable({
 	return (
 		<Box className={styles.report_table}>
 			<TableHead columns={columns} role={role} />
-			{loading ? (
-				<CircularProgress />
-			) : (
-				data.map((row) => {
+			<ComponentLoader loading={loading}>
+				{data.map((row) => {
 					return (
 						<TableRow
 							key={row.id}
@@ -26,8 +25,8 @@ export default function ReportTable({
 							innerColumns={innerColumns}
 						/>
 					);
-				})
-			)}
+				})}
+			</ComponentLoader>
 		</Box>
 	);
 }

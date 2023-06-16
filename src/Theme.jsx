@@ -4,9 +4,6 @@ const theme = createTheme({
 		primary: {
 			main: "#116A7B",
 		},
-		secondary: {
-			main: "#7b1fa2",
-		},
 	},
 });
 export default function Theme({ children }) {

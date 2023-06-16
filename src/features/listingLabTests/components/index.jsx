@@ -7,13 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchTests } from "../../../store/labSlice/action";
 
 export default function ListingLabTest() {
-	const lab_id = 4;
 	const dispatch = useDispatch();
 	const { test_data: data, loading } = useSelector((state) => state.lab);
 	useEffect(() => {
-		if (!data || data.length === 0) dispatch(fetchTests(lab_id));
+		if (!data || data.length === 0) dispatch(fetchTests());
 	}, []);
-	console.log(data, "lab test");
 	return (
 		<Container component="main" maxWidth="lg">
 			<Box

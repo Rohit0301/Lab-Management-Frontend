@@ -6,11 +6,10 @@ import { fetchPatient } from "../../../store/patientSlice/action";
 import { PATIENT_COLUMNS } from "../../../constants";
 
 export default function ListingLabPateints() {
-	const lab_id = 4;
 	const dispatch = useDispatch();
 	const { data, loading } = useSelector((state) => state.patient);
 	useEffect(() => {
-		if (!data || data.length === 0) dispatch(fetchPatient(lab_id));
+		if (!data || data.length === 0) dispatch(fetchPatient());
 	}, []);
 	return (
 		<Container component="main" maxWidth="lg" style={{ paddingBottom: "8rem" }}>

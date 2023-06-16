@@ -1,3 +1,4 @@
 import { useGlobalContext } from "./useGlobalContext";
+import { useDebounce } from "./useDebounce";
 
-export { useGlobalContext }
+export { useGlobalContext, useDebounce };

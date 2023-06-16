@@ -2,7 +2,6 @@ import React, { useEffect, useReducer } from "react";
 import {
 	Box,
 	Button,
-	CircularProgress,
 	IconButton,
 	Modal,
 	TextField,
@@ -15,6 +14,7 @@ import { useGlobalContext } from "../../../hooks";
 import { initialState, reducer } from "../reducer";
 import { addOrUpdateNewTest } from "../../../store/labSlice/action";
 import { setTestError } from "../../../store/labSlice";
+import { LoaderButton } from "../../../components";
 
 export default function AddTestModal() {
 	const [open, setOpen] = React.useState(false);
@@ -22,7 +22,7 @@ export default function AddTestModal() {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const { openNotification, isTestEditing, handleEditTest, testData } =
 		useGlobalContext();
-	const { lab, user } = useSelector((state) => state);
+	const { lab, auth } = useSelector((state) => state);
 	const { loading, errors, status } = lab;
 	const { data } = state;
 
@@ -65,7 +65,7 @@ export default function AddTestModal() {
 		e.preventDefault();
 		reduxDispatch(
 			addOrUpdateNewTest({
-				data: { ...state.data, lab: user?.id },
+				data: { ...state.data, lab: auth.user?.id },
 				method: isTestEditing ? "PATCH" : "POST",
 				test_id: testData?.id,
 			})
@@ -86,7 +86,7 @@ export default function AddTestModal() {
 				Add New Test
 			</Button>
 			<Modal
-				open={open | isTestEditing}
+				open={open || isTestEditing}
 				onClose={handleClose}
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
@@ -179,21 +179,15 @@ export default function AddTestModal() {
 						>
 							Cancel
 						</Button>
-						<Button
+						<LoaderButton
 							type="submit"
 							fullWidth
 							variant="contained"
-							disabled={loading}
-							sx={{ mt: 3, mb: 2, p: 1 }}
+							loading={loading}
+							sx={{ mt: 3, mb: 2, p: 1.5 }}
 						>
-							{loading ? (
-								<CircularProgress style={{ color: "white" }} />
-							) : isTestEditing ? (
-								"Update Test"
-							) : (
-								"Add Test"
-							)}
-						</Button>
+							{isTestEditing ? "Update Test" : "Add Test"}
+						</LoaderButton>
 					</Box>
 				</Box>
 			</Modal>

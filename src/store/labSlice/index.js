@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
 	addOrUpdateNewTest,
+	assignTestToPatient,
 	deleteTest,
 	fetchLabReports,
 	fetchTests,
+	searchLabTest,
 } from "./action";
 
 export const labSlice = createSlice({
@@ -14,8 +16,16 @@ export const labSlice = createSlice({
 		loading: false,
 		errors: {},
 		status: "",
+		deleteStatus: "",
+		searchedResults: [],
 	},
 	reducers: {
+		setLabDefaultValues: (state, action) => {
+			state.status = "";
+			(state.deleteStatus = ""), (state.errors = {});
+			state.loading = false;
+			state.searchedResults = [];
+		},
 		setTestError: (state, action) => {
 			if (!action?.payload) {
 				state.errors = {};
@@ -65,10 +75,21 @@ export const labSlice = createSlice({
 					(item) => item.id != action.payload
 				);
 				state.test_data = newData;
+				state.deleteStatus = "success";
+			})
+			.addCase(searchLabTest.fulfilled, (state, action) => {
+				state.searchedResults = action.payload;
+				state.loading = false;
+			})
+			.addCase(assignTestToPatient.pending, (state, action) => {
+				state.loading = true;
+			})
+			.addCase(assignTestToPatient.fulfilled, (state, action) => {
+				state.loading = false;
 				state.status = "success";
 			});
 	},
 });
 
-export const { setTestError } = labSlice.actions;
+export const { setTestError, setLabDefaultValues } = labSlice.actions;
 export default labSlice.reducer;

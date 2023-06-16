@@ -13,14 +13,14 @@ export function AuthLayout({ children }) {
 				<Navbar />
 			</Grid>
 			<Grid container item xs={12} sx={{ height: "94%" }}>
-				<Grid item md={3} lg={2} xs={0} height="100vh">
+				<Grid item lg={2} md={3} sm={3} height="100vh">
 					<Sidebar />
 				</Grid>
 				<Grid
 					item
-					md={9}
 					lg={10}
-					xs={12}
+					md={9}
+					sm={9}
 					height="100vh"
 					style={{ overflowY: "scroll" }}
 				>

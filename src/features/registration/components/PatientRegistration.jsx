@@ -1,5 +1,4 @@
 import {
-	Button,
 	TextField,
 	Box,
 	Typography,
@@ -9,7 +8,6 @@ import {
 	FormControlLabel,
 	Radio,
 	FormLabel,
-	CircularProgress,
 } from "@mui/material";
 import styles from "../index.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,16 +23,25 @@ import {
 	patientRegistrationInitialState as initialState,
 	patientRegistrationReducer as reducer,
 } from "../reducer";
+import { LoaderButton } from "../../../components";
 
 export default function PateintRegistration() {
 	const reduxDispatch = useDispatch();
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const { openNotification, isPatientEditing, patientData } =
+	const { openNotification, isPatientEditing, patientData, handleEditPatient } =
 		useGlobalContext();
-	const { patient, user } = useSelector((state) => state);
+	const { patient, auth } = useSelector((state) => state);
 	const { loading, errors, status } = patient;
 	const { data } = state;
-
+	useEffect(() => {
+		dispatch({
+			type: "RESET_FEILDS",
+		});
+		return () => {
+			reduxDispatch(setPatientDefaultValues());
+			handleEditPatient(false);
+		};
+	}, []);
 	useEffect(() => {
 		if (isPatientEditing)
 			dispatch({
@@ -49,7 +56,7 @@ export default function PateintRegistration() {
 				type: status,
 				message:
 					status === "error"
-						? "Something went wrong"
+						? "Something went wrong !"
 						: isPatientEditing
 						? "Patient updated successfully"
 						: "New patient added successfully !",
@@ -59,7 +66,6 @@ export default function PateintRegistration() {
 					type: "RESET_FEILDS",
 				});
 			}
-			reduxDispatch(setPatientDefaultValues());
 		}
 	}, [status]);
 
@@ -67,7 +73,7 @@ export default function PateintRegistration() {
 		e.preventDefault();
 		reduxDispatch(
 			addOrUpdateNewPatient({
-				data: { ...state.data, lab: user?.id },
+				data: { ...state.data, lab: auth.user?.id },
 				method: isPatientEditing ? "PATCH" : "POST",
 				patient_id: patientData?.id,
 			})
@@ -109,7 +115,7 @@ export default function PateintRegistration() {
 								margin="normal"
 								required
 								fullWidth
-								error={errors?.first_name ? true : false}
+								error={errors?.first_name}
 								helperText={errors?.first_name && errors.first_name[0]}
 								onChange={handleChange}
 								value={data["first_name"]}
@@ -130,7 +136,7 @@ export default function PateintRegistration() {
 								label="Last Name"
 								name="last_name"
 								autoFocus
-								error={errors?.last_name ? true : false}
+								error={errors?.last_name}
 								helperText={errors?.last_name && errors.last_name[0]}
 							/>
 						</Grid>
@@ -142,7 +148,7 @@ export default function PateintRegistration() {
 								defaultValue="Male"
 								name="gender"
 								className={styles.gender_controls}
-								error={errors?.gender ? true : false}
+								error={errors?.gender}
 								helperText={errors?.gender && errors.gender[0]}
 								onChange={handleChange}
 								value={data["gender"]}
@@ -172,7 +178,7 @@ export default function PateintRegistration() {
 								label="Age (in years)"
 								name="age"
 								autoFocus
-								error={errors?.age ? true : false}
+								error={errors?.age}
 								helperText={errors?.age && errors.age[0]}
 							/>
 						</Grid>
@@ -187,7 +193,7 @@ export default function PateintRegistration() {
 								label="Email Address"
 								name="email_id"
 								autoFocus
-								error={errors?.email_id ? true : false}
+								error={errors?.email_id}
 								helperText={errors?.email_id && errors.email_id[0]}
 							/>
 						</Grid>
@@ -202,7 +208,7 @@ export default function PateintRegistration() {
 								label="Phone Number"
 								type="text"
 								id="phone_no"
-								error={errors?.phone_no ? true : false}
+								error={errors?.phone_no}
 								helperText={errors?.phone_no && errors.phone_no[0]}
 							/>
 						</Grid>
@@ -219,26 +225,20 @@ export default function PateintRegistration() {
 								label="Address"
 								type="text"
 								id="address"
-								error={errors?.address ? true : false}
+								error={errors?.address}
 								helperText={errors?.address && errors.address[0]}
 							/>
 						</Grid>
 						<Grid item xs={12}>
-							<Button
+							<LoaderButton
 								type="submit"
 								fullWidth
 								variant="contained"
-								disabled={loading}
+								loading={loading}
 								sx={{ mt: 3, mb: 2, p: 1.5 }}
 							>
-								{loading ? (
-									<CircularProgress style={{ color: "white" }} />
-								) : isPatientEditing ? (
-									"Update Details"
-								) : (
-									"Submit"
-								)}
-							</Button>
+								{isPatientEditing ? "Update Details" : "Submit"}
+							</LoaderButton>
 						</Grid>
 					</Grid>
 				</Box>

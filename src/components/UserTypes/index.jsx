@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import styles from "./index.module.css";
 import { USER_TYPES } from "../../constants";
@@ -10,8 +10,7 @@ export default function UserTypes({ title }) {
 			<Typography variant="body1">{title}</Typography>
 			<RadioGroup
 				className={styles.user_types_container}
-				name="login_user"
-				// defaultValue={DEFAULT_USER}
+				name="user_type"
 				value={userType}
 				onChange={(e) => handleChangeUserType(e.target.value)}
 			>

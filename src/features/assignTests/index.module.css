@@ -1,3 +1,16 @@
 .input_field input{
-    padding: 12px !important;
+    padding: 16px 10px !important;
 }
+
+.search_input input{
+    padding: 10px 14px !important;
+}
+
+.patient_details{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 16px;
+}
+

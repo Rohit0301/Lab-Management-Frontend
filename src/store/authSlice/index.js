@@ -3,11 +3,13 @@ import {
 	fetchLaboratory,
 	fetchSession,
 	fetchUser,
+	labRegister,
 	laboratoryLogin,
 	logout,
 	userLogin,
 	userRegister,
 } from "./action";
+import { RetriveServerError } from "../../utils/RetriveServerErrors";
 
 export const authSlice = createSlice({
 	name: "auth",
@@ -17,6 +19,7 @@ export const authSlice = createSlice({
 		user: {},
 		serverError: "",
 		status: "",
+		registeredStatus: "",
 		isLoggedIn: localStorage.getItem("session_id") ? true : false,
 		session_id: localStorage.getItem("session_id"),
 		globalLoader: false,
@@ -25,6 +28,8 @@ export const authSlice = createSlice({
 		setDefaultValues: (state) => {
 			state.status = "";
 			state.loading = false;
+			state.serverError = "";
+			state.registeredStatus = "";
 		},
 	},
 	extraReducers: (builder) => {
@@ -38,13 +43,27 @@ export const authSlice = createSlice({
 			})
 			.addCase(userRegister.pending, (state, action) => {
 				state.loading = true;
-				state.status = "";
+				state.registeredStatus = "";
 			})
 			.addCase(userRegister.fulfilled, (state, action) => {
-				if (action.payload) {
+				if (action.payload?.id) {
+					state.registeredStatus = "success";
+				} else {
+					state.registeredStatus = "error";
+					state.serverError = RetriveServerError(action.payload);
+				}
+				state.loading = false;
+			})
+			.addCase(labRegister.pending, (state, action) => {
+				state.loading = true;
+				state.status = "";
+			})
+			.addCase(labRegister.fulfilled, (state, action) => {
+				if (action.payload?.id) {
 					state.status = "success";
 				} else {
 					state.status = "error";
+					state.serverError = RetriveServerError(action.payload);
 				}
 				state.loading = false;
 			})

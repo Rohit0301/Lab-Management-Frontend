@@ -5,20 +5,16 @@ import {
 	fetchSession,
 	fetchUser,
 } from "../store/authSlice/action";
-import { useNavigate } from "react-router-dom";
-import { LOGIN } from "../constants/routes";
 import { CircularProgress } from "@mui/material";
 import PageNotFound from "../pages/PageNotFound";
+import { GlobalLoader } from "../components";
 
 export default function Root({ Component, Layout, accessRoles }) {
 	const dispatch = useDispatch();
-	const navigate = useNavigate();
 	const auth = useSelector((state) => state.auth);
 	useEffect(() => {
 		if (auth.isLoggedIn && !auth.user?.id) {
-			const session_id = auth.session_id || localStorage.getItem("session_id");
-			if (session_id) dispatch(fetchSession(session_id));
-			else navigate(LOGIN);
+			dispatch(fetchSession());
 		}
 	}, []);
 
@@ -26,14 +22,13 @@ export default function Root({ Component, Layout, accessRoles }) {
 		if (auth.user?.id) {
 			dispatch(
 				auth.role === "user"
-					? fetchUser(auth.user.id)
-					: fetchLaboratory(auth.user.id)
+					? fetchUser(auth.user?.id)
+					: fetchLaboratory(auth.user?.id)
 			);
 		}
 	}, [auth.user?.id]);
-
 	if (auth.globalLoader) {
-		return <CircularProgress color="primary" />;
+		return <GlobalLoader />;
 	} else if (!accessRoles || accessRoles.includes(auth?.role)) {
 		return (
 			<Layout>

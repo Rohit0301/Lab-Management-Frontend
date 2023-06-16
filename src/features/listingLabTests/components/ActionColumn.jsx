@@ -9,16 +9,16 @@ import { deleteTest } from "../../../store/labSlice/action";
 export default function LabActionColumn({ data }) {
 	const dispatch = useDispatch();
 
-	const { status } = useSelector((state) => state.lab);
+	const { deleteStatus } = useSelector((state) => state.lab);
 	const { openNotification, handleEditTest } = useGlobalContext();
 	useEffect(() => {
-		if (status) {
+		if (deleteStatus) {
 			openNotification({
 				type: "success",
 				message: "Test deleted successfully",
 			});
 		}
-	}, [status]);
+	}, [deleteStatus]);
 
 	return (
 		<Box style={{ display: "flex", alignItems: "center", gap: "2px" }}>

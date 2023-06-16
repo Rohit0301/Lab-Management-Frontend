@@ -30,7 +30,7 @@ export const BillRow = ({ data, columns, sr }) => {
 		<Box className={styles.bill_row}>
 			<Box>{sr}</Box>
 			{columns.map((col) => (
-				<Box>{col?.render ? col.render(data) : data[col.key]}</Box>
+				<Box key={col.id}>{col?.render ? col.render(data) : data[col.key]}</Box>
 			))}
 		</Box>
 	);

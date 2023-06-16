@@ -1,0 +1,31 @@
+
+.searchDropDown{
+    width: 100%;
+    height: max-content;
+    max-height: 20rem;
+    overflow-y: scroll;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    position: absolute;
+    z-index: 2;
+    background: white;
+}
+
+.dropDownItem{
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.dropDownItem:hover{
+   background-color: #e1e1e1;
+   cursor: pointer;
+}
+
+.dropDownItem_sec{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}

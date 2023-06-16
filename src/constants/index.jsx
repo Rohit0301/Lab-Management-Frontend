@@ -1,4 +1,5 @@
 import {
+	ASSIGN_TEST,
 	HOME,
 	LIST_PATIENTS,
 	LIST_REPORTS,
@@ -51,6 +52,12 @@ export const SIDEBAR_MENU = [
 	},
 	{
 		id: 4,
+		label: "Assign Test",
+		path: ASSIGN_TEST,
+		accessRoles: LABORATORY_ROLE,
+	},
+	{
+		id: 5,
 		label: "View Reports",
 		path: LIST_REPORTS,
 		accessRoles: ALL_ROLES,

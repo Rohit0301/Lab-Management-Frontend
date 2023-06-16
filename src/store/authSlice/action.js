@@ -5,6 +5,7 @@ import {
 	FETCH_SESSION_BY_ID,
 	FETCH_USER_BY_ID,
 	LAB_LOGIN_API,
+	LAB_REGISTER_API,
 	SESSION_LOGOUT,
 	USER_LOGIN_API,
 	USER_REGISTER_API,
@@ -16,10 +17,17 @@ export const userRegister = createAsyncThunk("userRegister", async (data) => {
 		endpoint: USER_REGISTER_API,
 		data: data,
 	});
-	if (response.status === 201) {
-		return response.data;
-	}
-	return;
+	return response.data;
+});
+
+export const labRegister = createAsyncThunk("labRegister", async (data) => {
+	const response = await Request({
+		method: "POST",
+		endpoint: LAB_REGISTER_API,
+		data: data,
+	});
+
+	return response.data;
 });
 
 export const userLogin = createAsyncThunk("userLogin", async (data) => {
@@ -44,11 +52,11 @@ export const laboratoryLogin = createAsyncThunk("labLogin", async (data) => {
 
 export const fetchSession = createAsyncThunk(
 	"fetchSession",
-	async (session_id) => {
+	async (_, { getState }) => {
 		const response = await Request({
 			method: "GET",
 			endpoint: FETCH_SESSION_BY_ID,
-			session: session_id,
+			session: getState().user.session_id || localStorage.getItem("session_id"),
 		});
 
 		return response.data;
@@ -59,6 +67,7 @@ export const fetchUser = createAsyncThunk("fetchUser", async (user_id) => {
 	const response = await Request({
 		method: "GET",
 		endpoint: FETCH_USER_BY_ID + `${user_id}/`,
+		session: getState().user.session_id || localStorage.getItem("session_id"),
 	});
 
 	return response.data;
@@ -66,21 +75,22 @@ export const fetchUser = createAsyncThunk("fetchUser", async (user_id) => {
 
 export const fetchLaboratory = createAsyncThunk(
 	"fetchLaboratory",
-	async (lab_id) => {
+	async (lab_id, { getState }) => {
 		const response = await Request({
 			method: "GET",
 			endpoint: FETCH_LAB_BY_ID + `${lab_id}/`,
+			session: getState().user.session_id || localStorage.getItem("session_id"),
 		});
 
 		return response.data;
 	}
 );
 
-export const logout = createAsyncThunk("logout", async (session_id) => {
+export const logout = createAsyncThunk("logout", async (_, { getState }) => {
 	const response = await Request({
 		method: "POST",
 		endpoint: SESSION_LOGOUT,
-		session: session_id || localStorage.getItem("session_id"),
+		session: getState().user.session_id || localStorage.getItem("session_id"),
 	});
 
 	return response.data;
