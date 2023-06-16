@@ -6,3 +6,10 @@
 .auth_btn:hover{
     border-color: white !important;
 }
+
+.container{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 2rem;
+}
