@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import moment from "moment";
 import { USER_ROLE } from ".";
+import { ViewInvoice } from "../components/";
 export const LabColumns = [
 	{
 		id: 1,
@@ -164,14 +165,16 @@ export const LabInnerColumns = [
 	},
 	{
 		id: 4,
-		name: "Sample Needed",
-		key: "test_sample_needed",
-	},
-	{
-		id: 5,
 		name: "Date & Time",
 		key: "bill_created_at",
 		render: (data) => moment(data.bill_created_at).format("Do MMMM YY, h:mm A"),
+	},
+	{
+		id: 5,
+		name: "View Invoice",
+		key: "invoice",
+		align: "center",
+		render: (data) => data.invoice && <ViewInvoice invoice_id={data.invoice} />,
 	},
 ];
 

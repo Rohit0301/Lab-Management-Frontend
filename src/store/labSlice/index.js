@@ -20,6 +20,9 @@ export const labSlice = createSlice({
 		searchedResults: [],
 	},
 	reducers: {
+		setLabLoading: (state, action) => {
+			state.loading = action.payload;
+		},
 		setLabDefaultValues: (state, action) => {
 			state.status = "";
 			(state.deleteStatus = ""), (state.errors = {});
@@ -91,5 +94,6 @@ export const labSlice = createSlice({
 	},
 });
 
-export const { setTestError, setLabDefaultValues } = labSlice.actions;
+export const { setTestError, setLabDefaultValues, setLabLoading } =
+	labSlice.actions;
 export default labSlice.reducer;

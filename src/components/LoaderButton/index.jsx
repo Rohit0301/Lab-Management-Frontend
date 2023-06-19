@@ -8,7 +8,11 @@ export default function LoaderButton({
 	...props
 }) {
 	return (
-		<Button {...props} disabled={loading || disabled}>
+		<Button
+			{...props}
+			style={{ minWidth: "12rem" }}
+			disabled={loading || disabled}
+		>
 			{loading ? (
 				<CircularProgress size={30} style={{ color: "white" }} />
 			) : (

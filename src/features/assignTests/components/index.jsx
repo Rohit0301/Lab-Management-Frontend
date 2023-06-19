@@ -16,16 +16,25 @@ import {
 	assignTestToPatient,
 	searchLabTest,
 } from "../../../store/labSlice/action";
-import { DropDown } from "../../../components";
+import { DropDown, LoaderButton, ViewInvoice } from "../../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { useDebounce, useGlobalContext } from "../../../hooks";
-import { setLabDefaultValues } from "../../../store/labSlice";
+import { setLabDefaultValues, setLabLoading } from "../../../store/labSlice";
+import { createInvoice } from "../../../utils";
 
 export default function AssignTests() {
 	const reduxDispatch = useDispatch();
-	const { status } = useSelector((state) => state.lab);
+	const { lab, auth } = useSelector((state) => state);
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const { openNotification } = useGlobalContext();
+	const [invoiceId, setInvoiceId] = useState("");
+	const { status, loading } = lab;
+
+	useEffect(() => {
+		return () => {
+			reduxDispatch(setLabDefaultValues());
+		};
+	}, []);
 
 	useEffect(() => {
 		if (status) {
@@ -33,20 +42,32 @@ export default function AssignTests() {
 				type: status,
 				message: "Bill generated Successfully",
 			});
-			dispatch({
-				type: "SET_DEFAULT",
-			});
-			reduxDispatch(setLabDefaultValues());
 		}
 	}, [status]);
 
-	const handleGenerateBill = () => {
+	const handleGenerateBill = async () => {
+		reduxDispatch(setLabLoading(true));
+		const invoiceData = {
+			patient: state.selected_patient,
+			lab: auth.user,
+			bills: state.bill_details,
+		};
+		const invoice = await createInvoice(invoiceData);
+		setInvoiceId(invoice?.pdf);
 		const data = {
 			total_amount: state.total_amount,
 			patient_id: state.selected_patient?.id,
 			test_ids: state.bill_details.map((bill) => bill?.id),
+			invoice: invoice?.pdf,
 		};
 		reduxDispatch(assignTestToPatient(data));
+	};
+
+	const handleClear = () => {
+		dispatch({
+			type: "SET_DEFAULT",
+		});
+		reduxDispatch(setLabDefaultValues());
 	};
 
 	return (
@@ -75,9 +96,21 @@ export default function AssignTests() {
 						totalAmount={state.total_amount}
 					/>
 					<Box className="btn_container">
-						<Button variant="contained" onClick={handleGenerateBill}>
-							Generate Bill
+						{invoiceId && (
+							<ViewInvoice invoice_id={invoiceId} buttonText="View Invoice" />
+						)}
+						<Button variant="outlined" onClick={handleClear}>
+							Clear
 						</Button>
+						{!invoiceId && (
+							<LoaderButton
+								variant="contained"
+								loading={loading}
+								onClick={handleGenerateBill}
+							>
+								Generate Bill
+							</LoaderButton>
+						)}
 					</Box>
 				</>
 			)}

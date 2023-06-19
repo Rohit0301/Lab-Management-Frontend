@@ -1,6 +1,6 @@
 import React from "react";
 import { UnAuthLayout, AuthLayout } from "../layout";
-import { BrowserRouter as Router, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Home from "../pages/Home";
 import {
@@ -23,6 +23,7 @@ import TestListing from "../pages/TestListing";
 import RegisterPatient from "../pages/RegisterPatient";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import Invoice from "../pages/Invoice";
 export const routes = [
 	{
 		title: "Login",

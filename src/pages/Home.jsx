@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Container, Typography } from "@mui/material";
+
 export default function Home() {
 	return (
 		<Container component="main" maxWidth="lg">

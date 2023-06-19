@@ -31,16 +31,16 @@ export default function GlobalContext({ children }) {
 		<globalContext.Provider
 			value={{
 				snackbarData,
-				openNotification,
-				closeNotification,
 				userType,
-				handleChangeUserType,
-				handleEditTest,
-				isTestEditing,
 				testData,
-				handleEditPatient,
+				isTestEditing,
 				isPatientEditing,
 				patientData,
+				openNotification,
+				closeNotification,
+				handleChangeUserType,
+				handleEditTest,
+				handleEditPatient,
 			}}
 		>
 			{children}

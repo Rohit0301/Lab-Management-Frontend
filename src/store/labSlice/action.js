@@ -86,16 +86,17 @@ export const searchLabTest = createAsyncThunk(
 
 export const assignTestToPatient = createAsyncThunk(
 	"assignTestToPatient",
-	async (data, { getState }) => {
+	async (data, { getState, dispatch }) => {
 		const response = await Request({
 			method: "POST",
 			endpoint: ASSIGN_TEST_TO_PATIENT,
 			data: data,
 			session: getState().user.session_id || localStorage.getItem("session_id"),
 		});
-		if (response.status === 201 || response.status === 200)
+		dispatch(searchLabTest(false));
+		if (response.status === 201 || response.status === 200) {
 			return response.data;
-		else
+		} else
 			return {
 				...response.data,
 				error: true,

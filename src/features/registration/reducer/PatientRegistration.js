@@ -1,5 +1,3 @@
-import { initialState } from "../../listingLabTests/reducer";
-
 export const patientRegistrationInitialState = {
 	data: {
 		first_name: "",
@@ -28,7 +26,7 @@ export const patientRegistrationReducer = (state, action) => {
 				},
 			};
 		case "RESET_FEILDS":
-			return initialState;
+			return patientRegistrationInitialState;
 		case "SET_DATA":
 			return {
 				...state,

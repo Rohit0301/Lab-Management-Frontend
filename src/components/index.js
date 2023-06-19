@@ -6,6 +6,8 @@ import DropDown from "./DropDown";
 import LoaderButton from "./LoaderButton";
 import ComponentLoader from "./ComponentLoader";
 import GlobalLoader from "./GlobalLoader";
+import PatientInvoice from "./Invoice";
+import ViewInvoice from "./Invoice/ViewInvoice";
 export {
 	UserTypes,
 	CustomTable,
@@ -15,4 +17,6 @@ export {
 	LoaderButton,
 	ComponentLoader,
 	GlobalLoader,
+	PatientInvoice,
+	ViewInvoice,
 };

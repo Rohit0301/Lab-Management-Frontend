@@ -5,12 +5,16 @@ import { CustomTable } from "../../../components";
 import { TEST_COLUMN } from "../../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTests } from "../../../store/labSlice/action";
+import { setLabDefaultValues } from "../../../store/labSlice";
 
 export default function ListingLabTest() {
 	const dispatch = useDispatch();
 	const { test_data: data, loading } = useSelector((state) => state.lab);
 	useEffect(() => {
 		if (!data || data.length === 0) dispatch(fetchTests());
+		return () => {
+			dispatch(setLabDefaultValues());
+		};
 	}, []);
 	return (
 		<Container component="main" maxWidth="lg">

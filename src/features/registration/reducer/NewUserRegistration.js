@@ -1,5 +1,4 @@
 import { EMAIL_REGEX } from "../../../constants/regex";
-import { initialState } from "../../listingLabTests/reducer";
 
 export const newUserRegistrationInitialState = {
 	data: {
@@ -29,7 +28,7 @@ const fields = {
 export const newUserRegistrationReducer = (state, action) => {
 	switch (action.type) {
 		case "RESET_FIELDS":
-			return initialState;
+			return newUserRegistrationInitialState;
 		case "SET_ERROR":
 			console.log("enter");
 			return {
